@@ -48,8 +48,13 @@ ABC_NAMESPACE_IMPL_START
 ***********************************************************************/
 unsigned Gia_ManRandom( int fReset )
 {
+#ifdef _MSC_VER
     static unsigned int m_z = NUMBER1;
     static unsigned int m_w = NUMBER2;
+#else
+    static __thread unsigned int m_z = NUMBER1;
+    static __thread unsigned int m_w = NUMBER2;
+#endif    
     if ( fReset )
     {
         m_z = NUMBER1;
@@ -3458,7 +3463,7 @@ Gia_Man_t * Gia_ManDupInsertWindows( Gia_Man_t * p, Vec_Ptr_t * vvIns, Vec_Ptr_t
     Vec_IntFree( vMap );
     pNew = Gia_ManCleanup( pTemp = pNew );
     Gia_ManStop( pTemp );
-    Gia_ManPrint( pNew );
+    //Gia_ManPrint( pNew );
     return pNew;
 }
 
